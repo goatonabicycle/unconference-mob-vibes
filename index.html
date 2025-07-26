@@ -8,11 +8,12 @@
       name="description"
       content="Welcome to the Unconference - Discover amazing experiences"
     />
-    <link rel="manifest" href="manifest.json">
+    <!-- PWA Manifest - Commented out to prevent Vercel deployment conflicts -->
+    <!-- <link rel="manifest" href="manifest.json"> -->
     <meta name="theme-color" content="#ff006e">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Duck Vibes">
+    <!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+    <!-- <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> -->
+    <!-- <meta name="apple-mobile-web-app-title" content="Duck Vibes"> -->
     <link rel="stylesheet" href="synthwave-bg.css">
     <link rel="stylesheet" href="responsive.css">
     <link rel="stylesheet" href="footer.css">
@@ -564,6 +565,21 @@
           dogGroup.position.x = -100;
         }
       }
+      
+      // Service Worker registration - Commented out to prevent Vercel conflicts
+      /*
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('🦆 SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('🦆 SW registration failed: ', registrationError);
+            });
+        });
+      }
+      */
     </script>
     
     <footer class="site-footer">

@@ -1,4 +1,5 @@
 {
+  "_comment": "PWA Manifest - Currently disabled to prevent Vercel deployment conflicts",
   "name": "Unconference Duck Vibes",
   "short_name": "DuckVibes",
   "description": "The ultimate duck-themed synthwave experience with recipes, games, and pure quack-tastic fun!",
