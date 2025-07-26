@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Dakka La Range Recipe</title>
+    <link rel="stylesheet" href="synthwave-bg.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="audio-controls.css">
+    <style>
+      nav {
+        background-color: #333;
+        padding: 1rem;
+      }
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 2rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      main {
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .recipe {
+        background-color: #f5f5f5;
+        padding: 2rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+      }
+      .recipe-image {
+        width: 100%;
+        height: 300px;
+        background-color: #ddd;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        font-style: italic;
+      }
+      h2 {
+        color: #333;
+        border-bottom: 2px solid #333;
+        padding-bottom: 0.5rem;
+      }
+      ul, ol {
+        line-height: 1.8;
+      }
+      
+      /* Hidden Easter Egg */
+      .easter-egg {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        transition: opacity 0.3s;
+        font-size: 0.1px;
+        color: transparent;
+        background: transparent;
+        border: none;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      
+      .easter-egg:hover {
+        opacity: 0.1;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.1);
+        width: auto;
+        height: auto;
+      }
+      
+      /* Hidden in the recipe */
+      .hidden-duck {
+        display: inline;
+        opacity: 0;
+        font-size: 1px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      
+      .hidden-duck:hover {
+        opacity: 0.2;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="synthwave-bg">
+      <div class="synthwave-sun"></div>
+      <div class="synthwave-stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+      </div>
+      <div class="parallax-layer parallax-layer-1"></div>
+      <div class="parallax-layer parallax-layer-2"></div>
+      <div class="synthwave-mountains"></div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="go-here.html">Go here</a></li>
+        <li><a href="from-here.html">From here</a></li>
+        <li><a href="world-map.html">World Map</a></li>
+        <li><a href="duck-game.html">Duck Game</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="duck-ranks.html">Duck Ranks</a></li>
+        <li><a href="guestbook.html">Guestbook</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+      <div class="audio-controls">
+        <button class="audio-toggle" title="Play synthwave music">🔊</button>
+        <div class="volume-container">
+          <input type="range" class="volume-slider" min="0" max="100" value="30" title="Volume">
+          <span class="volume-percentage">30%</span>
+        </div>
+        <div class="audio-info">Synthwave Ambient</div>
+      </div>
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+    <main>
+      <h1>Contact</h1>
+      
+      <div class="recipe">
+        <h2>Dakka La Range Recipe</h2>
+        
+        <div class="recipe-image">
+          <!-- Replace this div with an actual image tag when you have the image -->
+          <!-- Example: <img src="dakka-la-range.jpg" alt="Dakka La Range dish"> -->
+          [Image of Dakka La Range - golden lentil curry garnished with coriander]
+        </div>
+        
+        <h3>Ingredients:</h3>
+        <ul>
+          <li>2 cups red lentils</li>
+          <li>4 cups water</li>
+          <li>1 tsp turmeric powder</li>
+          <li>1 tsp salt</li>
+          <li>2 tbsp ghee or oil</li>
+          <li>1 tsp cumin seeds</li>
+          <li>4-5 garlic cloves, minced</li>
+          <li>1 inch ginger, minced<span class="hidden-duck" onclick="triggerEasterEgg()" title="🦆">🦆</span></li>
+          <li>2-3 green chilies, slit</li>
+          <li>1 medium onion, sliced</li>
+          <li>2 tomatoes, chopped</li>
+          <li>1/2 tsp red chili powder</li>
+          <li>1/2 tsp garam masala</li>
+          <li>Fresh coriander leaves for garnish</li>
+        </ul>
+        
+        <h3>Instructions:</h3>
+        <ol>
+          <li>Rinse the red lentils thoroughly until water runs clear.</li>
+          <li>In a pot, combine lentils, water, turmeric, and salt. Bring to a boil.</li>
+          <li>Reduce heat and simmer for 20-25 minutes until lentils are soft and mushy. Stir occasionally and add water if needed.</li>
+          <li>In a separate pan, heat ghee or oil over medium heat.</li>
+          <li>Add cumin seeds and let them splutter.</li>
+          <li>Add minced garlic, ginger, and green chilies. Sauté for 1-2 minutes.</li>
+          <li>Add sliced onions and cook until golden brown.</li>
+          <li>Add tomatoes and cook until soft and mushy<span class="hidden-duck" onclick="triggerEasterEgg()" title="🦆">🦆</span>.</li>
+          <li>Add red chili powder and garam masala. Mix well.</li>
+          <li>Pour this tempering over the cooked lentils and mix thoroughly.</li>
+          <li>Simmer for 5 more minutes to blend the flavors.</li>
+          <li>Garnish with fresh coriander leaves.</li>
+          <li>Serve hot with rice or roti.</li>
+        </ol>
+        
+        <p><strong>Cooking Time:</strong> 35-40 minutes<br>
+        <strong>Serves:</strong> 4-6 people</p>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-top">
+          <div class="footer-section">
+            <h3>Unconference</h3>
+            <p>Experience amazing recipes, explore the world, and join our vibrant community of food and tech enthusiasts.</p>
+            <p>Built with cutting-edge web technologies and a passion for innovation.</p>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="world-map.html">World Recipe Map</a></li>
+              <li><a href="duck-game.html">Duck Pong Game</a></li>
+              <li><a href="gallery.html">Duck Gallery</a></li>
+              <li><a href="contact.html">Recipes</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <div class="crypto-ticker" id="crypto-tickers">
+              <!-- Crypto tickers will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2024 Unconference. Built with Three.js, Synthwave CSS, and Binance API.</p>
+          <p>Prices provided by Binance. Updates every 5 minutes.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      function toggleMobileMenu() {
+        const menu = document.querySelector('nav ul');
+        menu.classList.toggle('show');
+      }
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('nav')) {
+          document.querySelector('nav ul').classList.remove('show');
+        }
+      });
+      
+      // Easter Egg Function
+      function triggerEasterEgg() {
+        // Show a fun message first
+        alert('🦆 You found the hidden duck! Downloading DuckDuckGo for you... 🦆');
+        
+        // Create a download link for DuckDuckGo
+        const link = document.createElement('a');
+        link.href = 'https://duckduckgo.com/app';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        
+        // Trigger the download/redirect
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Also show a congratulatory effect
+        showCelebration();
+      }
+      
+      function showCelebration() {
+        // Create floating ducks
+        for (let i = 0; i < 10; i++) {
+          createFloatingDuck();
+        }
+      }
+      
+      function createFloatingDuck() {
+        const duck = document.createElement('div');
+        duck.innerHTML = '🦆';
+        duck.style.position = 'fixed';
+        duck.style.fontSize = '2rem';
+        duck.style.pointerEvents = 'none';
+        duck.style.zIndex = '9999';
+        duck.style.left = Math.random() * window.innerWidth + 'px';
+        duck.style.top = window.innerHeight + 'px';
+        duck.style.transition = 'all 3s ease-out';
+        
+        document.body.appendChild(duck);
+        
+        // Animate the duck floating up
+        setTimeout(() => {
+          duck.style.top = '-100px';
+          duck.style.transform = 'rotate(360deg)';
+          duck.style.opacity = '0';
+        }, 100);
+        
+        // Remove the duck after animation
+        setTimeout(() => {
+          if (duck.parentNode) {
+            duck.parentNode.removeChild(duck);
+          }
+        }, 3100);
+      }
+    </script>
+    <script src="footer.js"></script>
+    <script src="audio-controls.js"></script>
+  </body>
+</html>

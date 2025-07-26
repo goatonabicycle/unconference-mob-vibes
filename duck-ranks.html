@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duck Developer Ranks - Military Division</title>
+    <link rel="stylesheet" href="synthwave-bg.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="audio-controls.css">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #000;
+        overflow-x: hidden;
+      }
+      
+      nav {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+      }
+      
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+      }
+      
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.3s;
+        font-size: 0.9rem;
+      }
+      
+      nav a:hover {
+        opacity: 0.8;
+      }
+      
+      nav li:last-child {
+        margin-left: auto;
+      }
+      
+      nav li:last-child a {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1.5rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+      }
+      
+      nav li:last-child a:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      
+      main {
+        padding: 2rem;
+        position: relative;
+        z-index: 10;
+        min-height: 100vh;
+      }
+      
+      h1 {
+        text-align: center;
+        color: white;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+        background: linear-gradient(45deg, #ff006e, #8b00ff, #00ffff);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+      
+      .subtitle {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.3rem;
+        margin-bottom: 3rem;
+        font-style: italic;
+      }
+      
+      .ranks-container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      
+      .rank-category {
+        margin-bottom: 4rem;
+      }
+      
+      .category-title {
+        color: #ff006e;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        text-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+        border-bottom: 2px solid rgba(255, 0, 255, 0.3);
+        padding-bottom: 1rem;
+      }
+      
+      .ranks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+      
+      .rank-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 0, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .rank-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(255, 0, 255, 0.4);
+        border-color: rgba(255, 0, 255, 0.5);
+      }
+      
+      .rank-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+      
+      .rank-icon {
+        font-size: 3rem;
+        margin-right: 1rem;
+        filter: drop-shadow(0 0 10px rgba(255, 255, 0, 0.5));
+      }
+      
+      .rank-info h3 {
+        color: white;
+        margin: 0 0 0.5rem 0;
+        font-size: 1.5rem;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+      }
+      
+      .rank-title {
+        color: #00ffff;
+        font-size: 1rem;
+        margin: 0;
+        font-weight: 500;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
+      }
+      
+      .rank-description {
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+      
+      .rank-responsibilities {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .rank-responsibilities h4 {
+        color: #ff006e;
+        margin: 0 0 0.75rem 0;
+        font-size: 1rem;
+      }
+      
+      .rank-responsibilities ul {
+        margin: 0;
+        padding-left: 1.5rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+      
+      .rank-responsibilities li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .rank-stats {
+        display: flex;
+        justify-content: space-around;
+        background: rgba(255, 0, 255, 0.1);
+        border-radius: 8px;
+        padding: 1rem;
+        border: 1px solid rgba(255, 0, 255, 0.3);
+      }
+      
+      .stat {
+        text-align: center;
+      }
+      
+      .stat-value {
+        color: #00ffff;
+        font-size: 1.5rem;
+        font-weight: bold;
+        display: block;
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.8);
+      }
+      
+      .stat-label {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8rem;
+      }
+      
+      .promotion-path {
+        background: rgba(0, 255, 136, 0.1);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+      
+      .promotion-path h4 {
+        color: #00ff88;
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+      }
+      
+      .promotion-path p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.85rem;
+      }
+      
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+        }
+        to {
+          text-shadow: 0 0 30px rgba(255, 0, 255, 1), 0 0 40px rgba(0, 255, 255, 0.8);
+        }
+      }
+      
+      .legend {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 3rem 0;
+        text-align: center;
+        border: 1px solid rgba(255, 0, 255, 0.2);
+      }
+      
+      .legend h3 {
+        color: #ff006e;
+        margin-bottom: 1rem;
+      }
+      
+      .legend p {
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="synthwave-bg">
+      <div class="synthwave-sun"></div>
+      <div class="synthwave-stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+      </div>
+      <div class="parallax-layer parallax-layer-1"></div>
+      <div class="parallax-layer parallax-layer-2"></div>
+      <div class="synthwave-mountains"></div>
+    </div>
+    
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="go-here.html">Go here</a></li>
+        <li><a href="from-here.html">From here</a></li>
+        <li><a href="world-map.html">World Map</a></li>
+        <li><a href="duck-game.html">Duck Game</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="duck-ranks.html">Duck Ranks</a></li>
+        <li><a href="guestbook.html">Guestbook</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+      <div class="audio-controls">
+        <button class="audio-toggle" title="Play synthwave music">🔊</button>
+        <div class="volume-container">
+          <input type="range" class="volume-slider" min="0" max="100" value="30" title="Volume">
+          <span class="volume-percentage">30%</span>
+        </div>
+        <div class="audio-info">Synthwave Ambient</div>
+      </div>
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+    
+    <main>
+      <h1>🦆 Duck Developer Corps 🦆</h1>
+      <p class="subtitle">"Elite Waterfowl Division - Coding Excellence Through Aquatic Discipline"</p>
+      
+      <div class="legend">
+        <h3>🎖️ About the Duck Developer Corps</h3>
+        <p>The Duck Developer Corps represents the finest tradition of coding excellence, where developers advance through ranks based on their technical skills, leadership abilities, and commitment to clean code. Each rank carries unique responsibilities and privileges within our elite coding squadron.</p>
+      </div>
+      
+      <div class="ranks-container">
+        
+        <!-- Junior Ranks -->
+        <div class="rank-category">
+          <h2 class="category-title">🐣 Junior Division</h2>
+          <div class="ranks-grid">
+            
+            <div class="rank-card">
+              <div class="rank-header">
+                <div class="rank-icon">🐣</div>
+                <div class="rank-info">
+                  <h3>Duckling</h3>
+                  <p class="rank-title">Entry-Level Developer</p>
+                </div>
+              </div>
+              <div class="rank-description">
+                Fresh out of bootcamp or university, the Duckling is eager to learn and contribute. Still developing their swimming skills in the vast ocean of code.
+              </div>
+              <div class="rank-responsibilities">
+                <h4>Primary Duties:</h4>
+                <ul>
+                  <li>Fix bugs and implement simple features</li>
+                  <li>Follow coding standards and best practices</li>
+                  <li>Learn from senior developers</li>
+                  <li>Write basic unit tests</li>
+                  <li>Participate in code reviews</li>
+                </ul>
+              </div>
+              <div class="rank-stats">
+                <div class="stat">
+                  <span class="stat-value">0-1</span>
+                  <div class="stat-label">Years</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">⭐</span>
+                  <div class="stat-label">Skill Level</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">🏊‍♂️</span>
+                  <div class="stat-label">Learning</div>
+                </div>
+              </div>
+              <div class="promotion-path">
+                <h4>Path to Junior Duck:</h4>
+                <p>Master basic programming concepts, complete first major project, and demonstrate consistent code quality.</p>
+              </div>
+            </div>
+            
+            <div class="rank-card">
+              <div class="rank-header">
+                <div class="rank-icon">🦆</div>
+                <div class="rank-info">
+                  <h3>Junior Duck</h3>
+                  <p class="rank-title">Junior Developer</p>
+                </div>
+              </div>
+              <div class="rank-description">
+                The Junior Duck has learned to swim confidently in familiar waters. Capable of handling routine development tasks independently with occasional guidance.
+              </div>
+              <div class="rank-responsibilities">
+                <h4>Primary Duties:</h4>
+                <ul>
+                  <li>Develop medium-complexity features</li>
+                  <li>Debug and resolve technical issues</li>
+                  <li>Mentor new Ducklings</li>
+                  <li>Contribute to technical documentation</li>
+                  <li>Participate in sprint planning</li>
+                </ul>
+              </div>
+              <div class="rank-stats">
+                <div class="stat">
+                  <span class="stat-value">1-3</span>
+                  <div class="stat-label">Years</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">⭐⭐</span>
+                  <div class="stat-label">Skill Level</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">🏊‍♀️</span>
+                  <div class="stat-label">Swimming</div>
+                </div>
+              </div>
+              <div class="promotion-path">
+                <h4>Path to Duck Sergeant:</h4>
+                <p>Lead a small project, demonstrate problem-solving skills, and show readiness for increased responsibility.</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+        <!-- Mid-Level Ranks -->
+        <div class="rank-category">
+          <h2 class="category-title">🦆 Professional Division</h2>
+          <div class="ranks-grid">
+            
+            <div class="rank-card">
+              <div class="rank-header">
+                <div class="rank-icon">🦆</div>
+                <div class="rank-info">
+                  <h3>Duck Sergeant</h3>
+                  <p class="rank-title">Mid-Level Developer</p>
+                </div>
+              </div>
+              <div class="rank-description">
+                A seasoned developer who has proven their abilities. The Duck Sergeant can navigate complex codebases and lead small development initiatives with confidence.
+              </div>
+              <div class="rank-responsibilities">
+                <h4>Primary Duties:</h4>
+                <ul>
+                  <li>Lead feature development from design to deployment</li>
+                  <li>Conduct thorough code reviews</li>
+                  <li>Design system architecture for medium projects</li>
+                  <li>Mentor junior developers</li>
+                  <li>Participate in technical decision making</li>
+                </ul>
+              </div>
+              <div class="rank-stats">
+                <div class="stat">
+                  <span class="stat-value">3-5</span>
+                  <div class="stat-label">Years</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">⭐⭐⭐</span>
+                  <div class="stat-label">Skill Level</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">🏄‍♂️</span>
+                  <div class="stat-label">Surfing</div>
+                </div>
+              </div>
+              <div class="promotion-path">
+                <h4>Path to Senior Duck:</h4>
+                <p>Demonstrate architectural thinking, lead cross-team initiatives, and show technical leadership capabilities.</p>
+              </div>
+            </div>
+            
+            <div class="rank-card">
+              <div class="rank-header">
+                <div class="rank-icon">🦢</div>
+                <div class="rank-info">
+                  <h3>Senior Duck</h3>
+                  <p class="rank-title">Senior Developer</p>
+                </div>
+              </div>
+              <div class="rank-description">
+                An elegant and powerful developer who commands respect across the pond. The Senior Duck combines deep technical knowledge with leadership skills.
+              </div>
+              <div class="rank-responsibilities">
+                <h4>Primary Duties:</h4>
+                <ul>
+                  <li>Design and architect large-scale systems</li>
+                  <li>Lead technical initiatives across teams</li>
+                  <li>Establish coding standards and best practices</li>
+                  <li>Make critical technical decisions</li>
+                  <li>Drive technical innovation and improvement</li>
+                </ul>
+              </div>
+              <div class="rank-stats">
+                <div class="stat">
+                  <span class="stat-value">5-8</span>
+                  <div class="stat-label">Years</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">⭐⭐⭐⭐</span>
+                  <div class="stat-label">Skill Level</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">🌊</span>
+                  <div class="stat-label">Commanding</div>
+                </div>
+              </div>
+              <div class="promotion-path">
+                <h4>Path to Duck Captain:</h4>
+                <p>Demonstrate exceptional technical leadership, drive strategic initiatives, and show ability to influence organization-wide decisions.</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+        <!-- Senior Leadership Ranks -->
+        <div class="rank-category">
+          <h2 class="category-title">👑 Command Division</h2>
+          <div class="ranks-grid">
+            
+            <div class="rank-card">
+              <div class="rank-header">
+                <div class="rank-icon">🦢</div>
+                <div class="rank-info">
+                  <h3>Duck Captain</h3>
+                  <p class="rank-title">Tech Lead / Principal Engineer</p>
+                </div>
+              </div>
+              <div class="rank-description">
+                The Duck Captain leads from the front, navigating treacherous technical waters and ensuring the entire squadron reaches their destination safely and efficiently.
+              </div>
+              <div class="rank-responsibilities">
+                <h4>Primary Duties:</h4>
+                <ul>
+                  <li>Lead multiple development teams</li>
+                  <li>Define technical strategy and roadmaps</li>
+                  <li>Collaborate with product and business stakeholders</li>
+                  <li>Ensure technical excellence across projects</li>
+                  <li>Develop and retain top talent</li>
+                </ul>
+              </div>
+              <div class="rank-stats">
+                <div class="stat">
+                  <span class="stat-value">8-12</span>
+                  <div class="stat-label">Years</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">⭐⭐⭐⭐⭐</span>
+                  <div class="stat-label">Skill Level</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">⚓</span>
+                  <div class="stat-label">Leading</div>
+                </div>
+              </div>
+              <div class="promotion-path">
+                <h4>Path to Duck Admiral:</h4>
+                <p>Demonstrate organizational impact, strategic thinking, and ability to influence company-wide technical decisions.</p>
+              </div>
+            </div>
+            
+            <div class="rank-card">
+              <div class="rank-header">
+                <div class="rank-icon">👑</div>
+                <div class="rank-info">
+                  <h3>Duck Admiral</h3>
+                  <p class="rank-title">CTO / VP Engineering</p>
+                </div>
+              </div>
+              <div class="rank-description">
+                The supreme commander of the Duck Developer Corps. The Duck Admiral oversees the entire technical organization with wisdom, vision, and unparalleled expertise.
+              </div>
+              <div class="rank-responsibilities">
+                <h4>Primary Duties:</h4>
+                <ul>
+                  <li>Set overall technical vision and strategy</li>
+                  <li>Build and scale engineering organizations</li>
+                  <li>Make critical technology and architecture decisions</li>
+                  <li>Represent technology at executive level</li>
+                  <li>Drive innovation and competitive advantage</li>
+                </ul>
+              </div>
+              <div class="rank-stats">
+                <div class="stat">
+                  <span class="stat-value">12+</span>
+                  <div class="stat-label">Years</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">🌟</span>
+                  <div class="stat-label">Legendary</div>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">🏰</span>
+                  <div class="stat-label">Strategic</div>
+                </div>
+              </div>
+              <div class="promotion-path">
+                <h4>The Ultimate Rank:</h4>
+                <p>There is no promotion beyond Duck Admiral - only the honor of leading the next generation of elite developers.</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="legend">
+        <h3>🎖️ Joining the Duck Developer Corps</h3>
+        <p>Advancement through the ranks requires dedication, continuous learning, and a commitment to excellence. Each developer's journey is unique, but all members of the Duck Developer Corps share a common bond: the pursuit of coding perfection and the spirit of collaboration that makes great software possible.</p>
+        <p><strong>Remember:</strong> <em>"We code together, we swim together, we succeed together!"</em> 🦆💪</p>
+      </div>
+      
+    </main>
+    
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-top">
+          <div class="footer-section">
+            <h3>Unconference</h3>
+            <p>Experience amazing recipes, explore the world, and join our vibrant community of food and tech enthusiasts.</p>
+            <p>Built with cutting-edge web technologies and a passion for innovation.</p>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="world-map.html">World Recipe Map</a></li>
+              <li><a href="duck-game.html">Duck Pong Game</a></li>
+              <li><a href="gallery.html">Duck Gallery</a></li>
+              <li><a href="duck-ranks.html">Duck Ranks</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <div class="crypto-ticker" id="crypto-tickers">
+              <!-- Crypto tickers will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2024 Unconference. Built with Three.js, Synthwave CSS, and Binance API.</p>
+          <p>Prices provided by Binance. Updates every 5 minutes.</p>
+        </div>
+      </div>
+    </footer>
+    
+    <script>
+      function toggleMobileMenu() {
+        const menu = document.querySelector('nav ul');
+        menu.classList.toggle('show');
+      }
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('nav')) {
+          document.querySelector('nav ul').classList.remove('show');
+        }
+      });
+    </script>
+    
+    <script src="footer.js"></script>
+    <script src="auth.js"></script>
+    <script src="audio-controls.js"></script>
+  </body>
+</html>

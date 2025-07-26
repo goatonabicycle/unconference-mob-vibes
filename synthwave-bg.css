@@ -1,0 +1,251 @@
+/* Synthwave/Chillwave Parallax Background */
+.synthwave-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  background: linear-gradient(to bottom, #0f0c29 0%, #302b63 50%, #24243e 100%);
+}
+
+/* Grid floor */
+.synthwave-bg::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 0, 255, 0.1) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255, 0, 255, 0.1) 2px, transparent 2px);
+  background-size: 100px 100px, 100px 100px;
+  background-position: -2px -2px, -2px -2px;
+  transform: translate(-50%, -50%) rotateX(60deg);
+  transform-origin: center;
+  animation: grid-move 20s linear infinite;
+}
+
+/* Sun/moon orb */
+.synthwave-sun {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(180deg, #ff006e 0%, #ff4582 50%, #ffb6c1 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 60px #ff006e,
+    0 0 100px #ff4582,
+    0 0 140px #ffb6c1,
+    inset 0 0 60px rgba(255, 255, 255, 0.5);
+  animation: sun-glow 4s ease-in-out infinite alternate;
+}
+
+/* Horizontal scanlines */
+.synthwave-sun::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.3) 2px,
+    rgba(0, 0, 0, 0.3) 4px
+  );
+  border-radius: 50%;
+}
+
+/* Stars */
+.synthwave-stars {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  top: 0;
+  left: 0;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 3px white;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.star:nth-child(2) { top: 15%; left: 80%; animation-delay: 0.5s; }
+.star:nth-child(3) { top: 25%; left: 50%; animation-delay: 1s; }
+.star:nth-child(4) { top: 8%; left: 70%; animation-delay: 1.5s; }
+.star:nth-child(5) { top: 30%; left: 30%; animation-delay: 2s; }
+.star:nth-child(6) { top: 20%; left: 10%; animation-delay: 2.5s; }
+.star:nth-child(7) { top: 35%; left: 90%; animation-delay: 0.3s; }
+.star:nth-child(8) { top: 5%; left: 40%; animation-delay: 1.3s; }
+
+/* Mountain silhouettes */
+.synthwave-mountains {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: 
+    linear-gradient(135deg, transparent 30%, #1a1a2e 30%),
+    linear-gradient(45deg, #1a1a2e 60%, transparent 60%);
+  background-size: 300px 100%, 250px 100%;
+  background-position: 0 100%, 150px 100%;
+  background-repeat: repeat-x;
+  z-index: 2;
+}
+
+.synthwave-mountains::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: 
+    linear-gradient(115deg, transparent 40%, #16213e 40%),
+    linear-gradient(65deg, #16213e 50%, transparent 50%);
+  background-size: 400px 100%, 350px 100%;
+  background-position: 100px 100%, 300px 100%;
+  background-repeat: repeat-x;
+}
+
+/* Parallax layers */
+.parallax-layer {
+  position: absolute;
+  width: 110%;
+  height: 100%;
+  left: -5%;
+}
+
+.parallax-layer-1 {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 200px,
+    rgba(255, 0, 255, 0.03) 200px,
+    rgba(255, 0, 255, 0.03) 400px
+  );
+  animation: parallax-drift 30s linear infinite;
+}
+
+.parallax-layer-2 {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 150px,
+    rgba(0, 255, 255, 0.02) 150px,
+    rgba(0, 255, 255, 0.02) 300px
+  );
+  animation: parallax-drift 20s linear infinite reverse;
+}
+
+/* Animations */
+@keyframes grid-move {
+  0% {
+    transform: translate(-50%, -50%) rotateX(60deg) translateZ(0) translateY(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateX(60deg) translateZ(0) translateY(-100px);
+  }
+}
+
+@keyframes sun-glow {
+  0% {
+    box-shadow: 
+      0 0 60px #ff006e,
+      0 0 100px #ff4582,
+      0 0 140px #ffb6c1,
+      inset 0 0 60px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    box-shadow: 
+      0 0 80px #ff006e,
+      0 0 120px #ff4582,
+      0 0 160px #ffb6c1,
+      inset 0 0 80px rgba(255, 255, 255, 0.8);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes parallax-drift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-200px); }
+}
+
+/* Ensure content is above background */
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Add subtle glow to content */
+main, section {
+  position: relative;
+  backdrop-filter: blur(1px);
+}
+
+/* Adjust nav for better visibility */
+nav {
+  position: relative;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Add neon glow to buttons and links */
+.cta-button, .submit-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before, .submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 0, 255, 0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.cta-button:hover::before, .submit-btn:hover::before {
+  width: 200%;
+  height: 200%;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff006e, #8b00ff);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff4582, #a64dff);
+}

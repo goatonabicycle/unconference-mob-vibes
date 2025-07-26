@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duck Pong Game</title>
+    <link rel="stylesheet" href="synthwave-bg.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="audio-controls.css">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        overflow-x: hidden;
+      }
+      
+      nav {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 100;
+      }
+      
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.3s;
+      }
+      
+      nav a:hover {
+        opacity: 0.8;
+      }
+      
+      main {
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        min-height: calc(100vh - 60px);
+      }
+      
+      h1 {
+        color: white;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        margin-bottom: 1rem;
+      }
+      
+      .game-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 20px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+      }
+      
+      #gameCanvas {
+        border: 3px solid #ff006e;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.9);
+        box-shadow: 
+          0 0 20px #ff006e,
+          inset 0 0 20px rgba(255, 0, 255, 0.1);
+        display: block;
+        margin: 0 auto;
+      }
+      
+      .controls {
+        margin-top: 2rem;
+        color: white;
+      }
+      
+      .score {
+        font-size: 2rem;
+        color: #ff006e;
+        text-shadow: 0 0 10px #ff006e;
+        margin-bottom: 1rem;
+      }
+      
+      .instructions {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-top: 1rem;
+        color: white;
+      }
+      
+      .instructions h3 {
+        color: #ff006e;
+        margin-top: 0;
+      }
+      
+      button {
+        background: linear-gradient(135deg, #ff006e 0%, #8b00ff 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        margin: 0.5rem;
+      }
+      
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 0, 110, 0.4);
+      }
+      
+      .duck-ball {
+        font-size: 30px;
+        filter: drop-shadow(0 0 5px #ffff00);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="synthwave-bg">
+      <div class="synthwave-sun"></div>
+      <div class="synthwave-stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+      </div>
+      <div class="parallax-layer parallax-layer-1"></div>
+      <div class="parallax-layer parallax-layer-2"></div>
+      <div class="synthwave-mountains"></div>
+    </div>
+    
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="go-here.html">Go here</a></li>
+        <li><a href="from-here.html">From here</a></li>
+        <li><a href="world-map.html">World Map</a></li>
+        <li><a href="duck-game.html">Duck Game</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="duck-ranks.html">Duck Ranks</a></li>
+        <li><a href="guestbook.html">Guestbook</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+      <div class="audio-controls">
+        <button class="audio-toggle" title="Play synthwave music">🔊</button>
+        <div class="volume-container">
+          <input type="range" class="volume-slider" min="0" max="100" value="30" title="Volume">
+          <span class="volume-percentage">30%</span>
+        </div>
+        <div class="audio-info">Synthwave Ambient</div>
+      </div>
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+    
+    <main>
+      <h1>🦆 Duck Pong 🦆</h1>
+      
+      <div class="game-container">
+        <div class="score" id="score">Player: 0 | Computer: 0</div>
+        
+        <canvas id="gameCanvas" width="600" height="400" style="width: 100%; max-width: 600px; height: auto;"></canvas>
+        
+        <div class="controls">
+          <button onclick="startGame()">Start Game</button>
+          <button onclick="pauseGame()">Pause</button>
+          <button onclick="resetGame()">Reset</button>
+        </div>
+        
+        <div class="instructions">
+          <h3>How to Play:</h3>
+          <p>🎮 Use W/S or ↑/↓ keys to move your paddle</p>
+          <p>🦆 Hit the duck to send it to your opponent</p>
+          <p>🏆 First to 5 points wins!</p>
+          <p>💫 The duck speeds up as the game progresses</p>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-top">
+          <div class="footer-section">
+            <h3>Unconference</h3>
+            <p>Experience amazing recipes, explore the world, and join our vibrant community of food and tech enthusiasts.</p>
+            <p>Built with cutting-edge web technologies and a passion for innovation.</p>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="world-map.html">World Recipe Map</a></li>
+              <li><a href="duck-game.html">Duck Pong Game</a></li>
+              <li><a href="gallery.html">Duck Gallery</a></li>
+              <li><a href="contact.html">Recipes</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <div class="crypto-ticker" id="crypto-tickers">
+              <!-- Crypto tickers will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2024 Unconference. Built with Three.js, Synthwave CSS, and Binance API.</p>
+          <p>Prices provided by Binance. Updates every 5 minutes.</p>
+        </div>
+      </div>
+    </footer>
+    
+    <script>
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Game variables
+      let gameRunning = false;
+      let gamePaused = false;
+      let playerScore = 0;
+      let computerScore = 0;
+      
+      // Paddle properties
+      const paddleWidth = 10;
+      const paddleHeight = 80;
+      const paddleSpeed = 5;
+      
+      // Player paddle
+      let playerY = canvas.height / 2 - paddleHeight / 2;
+      let playerMovingUp = false;
+      let playerMovingDown = false;
+      
+      // Computer paddle
+      let computerY = canvas.height / 2 - paddleHeight / 2;
+      let computerSpeed = 3;
+      
+      // Duck (ball) properties
+      let duckX = canvas.width / 2;
+      let duckY = canvas.height / 2;
+      let duckSpeedX = 4;
+      let duckSpeedY = 3;
+      let duckSize = 30;
+      let baseSpeed = 4;
+      
+      // Duck rotation
+      let duckRotation = 0;
+      
+      // Keyboard controls
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+          playerMovingUp = true;
+        }
+        if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+          playerMovingDown = true;
+        }
+      });
+      
+      document.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+          playerMovingUp = false;
+        }
+        if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+          playerMovingDown = false;
+        }
+      });
+      
+      function drawPaddle(x, y, color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, paddleWidth, paddleHeight);
+        
+        // Add glow effect
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = color;
+        ctx.fillRect(x, y, paddleWidth, paddleHeight);
+        ctx.shadowBlur = 0;
+      }
+      
+      function drawDuck() {
+        ctx.save();
+        ctx.translate(duckX, duckY);
+        ctx.rotate(duckRotation);
+        
+        // Draw duck emoji with glow
+        ctx.font = `${duckSize}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#ffff00';
+        ctx.fillText('🦆', 0, 0);
+        
+        ctx.restore();
+      }
+      
+      function drawNet() {
+        ctx.setLineDash([5, 15]);
+        ctx.strokeStyle = '#ff006e';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, 0);
+        ctx.lineTo(canvas.width / 2, canvas.height);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      
+      function updatePlayer() {
+        if (playerMovingUp && playerY > 0) {
+          playerY -= paddleSpeed;
+        }
+        if (playerMovingDown && playerY < canvas.height - paddleHeight) {
+          playerY += paddleSpeed;
+        }
+      }
+      
+      function updateComputer() {
+        const computerCenter = computerY + paddleHeight / 2;
+        
+        if (duckY < computerCenter - 35) {
+          computerY -= computerSpeed;
+        } else if (duckY > computerCenter + 35) {
+          computerY += computerSpeed;
+        }
+        
+        // Keep computer paddle on screen
+        computerY = Math.max(0, Math.min(canvas.height - paddleHeight, computerY));
+      }
+      
+      function updateDuck() {
+        duckX += duckSpeedX;
+        duckY += duckSpeedY;
+        
+        // Rotate duck based on movement
+        duckRotation += 0.1;
+        
+        // Top and bottom collision
+        if (duckY - duckSize/2 <= 0 || duckY + duckSize/2 >= canvas.height) {
+          duckSpeedY = -duckSpeedY;
+        }
+        
+        // Player paddle collision
+        if (duckX - duckSize/2 <= 30 + paddleWidth &&
+            duckY >= playerY &&
+            duckY <= playerY + paddleHeight &&
+            duckSpeedX < 0) {
+          duckSpeedX = -duckSpeedX;
+          
+          // Add spin based on where duck hits paddle
+          const hitPos = (duckY - playerY) / paddleHeight;
+          duckSpeedY = 8 * (hitPos - 0.5);
+          
+          // Speed up slightly
+          duckSpeedX *= 1.05;
+        }
+        
+        // Computer paddle collision
+        if (duckX + duckSize/2 >= canvas.width - 30 - paddleWidth &&
+            duckY >= computerY &&
+            duckY <= computerY + paddleHeight &&
+            duckSpeedX > 0) {
+          duckSpeedX = -duckSpeedX;
+          
+          // Add spin
+          const hitPos = (duckY - computerY) / paddleHeight;
+          duckSpeedY = 8 * (hitPos - 0.5);
+          
+          // Speed up slightly
+          duckSpeedX *= 1.05;
+        }
+        
+        // Score points
+        if (duckX < 0) {
+          computerScore++;
+          resetDuck();
+        }
+        if (duckX > canvas.width) {
+          playerScore++;
+          resetDuck();
+        }
+        
+        // Update score display
+        document.getElementById('score').textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
+        
+        // Check for winner
+        if (playerScore >= 5 || computerScore >= 5) {
+          gameRunning = false;
+          const winner = playerScore >= 5 ? 'Player' : 'Computer';
+          ctx.fillStyle = '#ff006e';
+          ctx.font = '48px Arial';
+          ctx.textAlign = 'center';
+          ctx.fillText(`${winner} Wins!`, canvas.width / 2, canvas.height / 2);
+        }
+      }
+      
+      function resetDuck() {
+        duckX = canvas.width / 2;
+        duckY = canvas.height / 2;
+        duckSpeedX = baseSpeed * (Math.random() > 0.5 ? 1 : -1);
+        duckSpeedY = baseSpeed * (Math.random() - 0.5) * 2;
+      }
+      
+      function draw() {
+        // Clear canvas
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw game elements
+        drawNet();
+        drawPaddle(30, playerY, '#ff006e');
+        drawPaddle(canvas.width - 30 - paddleWidth, computerY, '#8b00ff');
+        drawDuck();
+      }
+      
+      function gameLoop() {
+        if (gameRunning && !gamePaused) {
+          updatePlayer();
+          updateComputer();
+          updateDuck();
+          draw();
+        }
+        requestAnimationFrame(gameLoop);
+      }
+      
+      function startGame() {
+        if (!gameRunning) {
+          gameRunning = true;
+          gamePaused = false;
+          playerScore = 0;
+          computerScore = 0;
+          resetDuck();
+        }
+      }
+      
+      function pauseGame() {
+        gamePaused = !gamePaused;
+      }
+      
+      function resetGame() {
+        gameRunning = false;
+        gamePaused = false;
+        playerScore = 0;
+        computerScore = 0;
+        playerY = canvas.height / 2 - paddleHeight / 2;
+        computerY = canvas.height / 2 - paddleHeight / 2;
+        resetDuck();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        draw();
+        document.getElementById('score').textContent = 'Player: 0 | Computer: 0';
+      }
+      
+      // Make canvas responsive
+      function resizeCanvas() {
+        const container = document.querySelector('.game-container');
+        const maxWidth = Math.min(600, container.offsetWidth - 40);
+        canvas.style.width = maxWidth + 'px';
+        canvas.style.height = (maxWidth * 0.667) + 'px';
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+      
+      function toggleMobileMenu() {
+        const menu = document.querySelector('nav ul');
+        menu.classList.toggle('show');
+      }
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('nav')) {
+          document.querySelector('nav ul').classList.remove('show');
+        }
+      });
+      
+      // Initialize game
+      draw();
+      gameLoop();
+    </script>
+    <script src="footer.js"></script>
+    <script src="audio-controls.js"></script>
+  </body>
+</html>

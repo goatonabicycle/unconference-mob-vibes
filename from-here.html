@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>From Here</title>
+    <link rel="stylesheet" href="synthwave-bg.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="audio-controls.css">
+    <style>
+      nav {
+        background-color: #333;
+        padding: 1rem;
+      }
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 2rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      main {
+        padding: 2rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="synthwave-bg">
+      <div class="synthwave-sun"></div>
+      <div class="synthwave-stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+      </div>
+      <div class="parallax-layer parallax-layer-1"></div>
+      <div class="parallax-layer parallax-layer-2"></div>
+      <div class="synthwave-mountains"></div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="go-here.html">Go here</a></li>
+        <li><a href="from-here.html">From here</a></li>
+        <li><a href="world-map.html">World Map</a></li>
+        <li><a href="duck-game.html">Duck Game</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="duck-ranks.html">Duck Ranks</a></li>
+        <li><a href="guestbook.html">Guestbook</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+      <div class="audio-controls">
+        <button class="audio-toggle" title="Play synthwave music">🔊</button>
+        <div class="volume-container">
+          <input type="range" class="volume-slider" min="0" max="100" value="30" title="Volume">
+          <span class="volume-percentage">30%</span>
+        </div>
+        <div class="audio-info">Synthwave Ambient</div>
+      </div>
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+    <main>
+      <h1>From here?</h1>
+      <p>Actually, you should <a href="go-here.html">go here</a> instead!</p>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-top">
+          <div class="footer-section">
+            <h3>Unconference</h3>
+            <p>Experience amazing recipes, explore the world, and join our vibrant community of food and tech enthusiasts.</p>
+            <p>Built with cutting-edge web technologies and a passion for innovation.</p>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="world-map.html">World Recipe Map</a></li>
+              <li><a href="duck-game.html">Duck Pong Game</a></li>
+              <li><a href="gallery.html">Duck Gallery</a></li>
+              <li><a href="contact.html">Recipes</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <div class="crypto-ticker" id="crypto-tickers">
+              <!-- Crypto tickers will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2024 Unconference. Built with Three.js, Synthwave CSS, and Binance API.</p>
+          <p>Prices provided by Binance. Updates every 5 minutes.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      function toggleMobileMenu() {
+        const menu = document.querySelector('nav ul');
+        menu.classList.toggle('show');
+      }
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('nav')) {
+          document.querySelector('nav ul').classList.remove('show');
+        }
+      });
+    </script>
+    <script src="footer.js"></script>
+    <script src="audio-controls.js"></script>
+  </body>
+</html>

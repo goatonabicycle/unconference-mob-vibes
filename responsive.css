@@ -1,0 +1,168 @@
+/* Mobile Responsive Styles */
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.mobile-menu-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  nav {
+    position: relative;
+  }
+  
+  nav ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: inherit;
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  nav ul.show {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  nav li {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  nav li:last-child {
+    margin-left: 0;
+    border-bottom: none;
+  }
+  
+  nav li:last-child a {
+    background: none;
+    padding: 0.5rem 0;
+    border-radius: 0;
+    backdrop-filter: none;
+  }
+  
+  nav li:last-child a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Adjust hero section for mobile */
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+  }
+  
+  /* Adjust feature cards for mobile */
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  /* Adjust main sections for mobile */
+  main {
+    padding: 1rem;
+  }
+  
+  .features {
+    padding: 2rem 1rem;
+  }
+  
+  #about, #services {
+    padding: 2rem 1rem;
+  }
+  
+  /* Adjust canvas container for mobile */
+  .game-container {
+    padding: 1rem;
+    margin: 0 0.5rem;
+  }
+  
+  /* Adjust world map for mobile */
+  #map-container {
+    margin: 0 1rem;
+  }
+  
+  .recipe-popup {
+    max-width: calc(100vw - 2rem);
+    left: 1rem !important;
+    right: 1rem;
+    width: auto;
+  }
+  
+  /* Adjust login form for mobile */
+  .auth-container {
+    max-width: 100%;
+    margin: 0 1rem;
+  }
+  
+  /* Adjust contact page for mobile */
+  .recipe {
+    padding: 1rem;
+  }
+  
+  .recipe-image {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+  
+  .hero {
+    padding: 3rem 1rem;
+  }
+  
+  .feature-card {
+    padding: 1.5rem;
+  }
+  
+  .game-container {
+    padding: 0.5rem;
+  }
+  
+  .controls {
+    margin-top: 1rem;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    margin: 0.25rem;
+  }
+  
+  .score {
+    font-size: 1.5rem;
+  }
+  
+  .instructions {
+    font-size: 0.9rem;
+  }
+}

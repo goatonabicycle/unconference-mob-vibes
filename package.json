@@ -1,0 +1,41 @@
+{
+  "name": "unconference-mob-vibes",
+  "version": "1.0.0",
+  "description": "Unconference website with duck-themed features and crypto tickers",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "start": "vercel dev",
+    "deploy": "vercel --prod",
+    "check-adr": "node docs/adr/adr-checker.js",
+    "pre-commit": "npm run check-adr"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.25.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.12"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/unconference-mob-vibes.git"
+  },
+  "keywords": [
+    "unconference",
+    "recipes",
+    "duck-game",
+    "crypto",
+    "synthwave",
+    "vercel",
+    "redis"
+  ],
+  "author": "Unconference Team",
+  "license": "MIT"
+}

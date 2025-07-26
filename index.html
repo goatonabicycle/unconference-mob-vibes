@@ -3,13 +3,643 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nothing</title>
+    <title>Unconference - Welcome</title>
     <meta
       name="description"
-      content="Nope"
+      content="Welcome to the Unconference - Discover amazing experiences"
     />
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff006e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Duck Vibes">
+    <link rel="stylesheet" href="synthwave-bg.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="audio-controls.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #000;
+        overflow-x: hidden;
+      }
+      
+      nav {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+      }
+      
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        align-items: center;
+      }
+      
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.3s;
+      }
+      
+      nav a:hover {
+        opacity: 0.8;
+      }
+      
+      nav li:last-child {
+        margin-left: auto;
+      }
+      
+      nav li:last-child a {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1.5rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+      }
+      
+      nav li:last-child a:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      
+      #threejs-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+      
+      .content-overlay {
+        position: relative;
+        z-index: 10;
+        padding-top: 80px;
+        min-height: 100vh;
+      }
+      
+      .hero {
+        background: transparent;
+        color: white;
+        padding: 5rem 2rem;
+        text-align: center;
+        backdrop-filter: blur(2px);
+      }
+      
+      .hero h1 {
+        font-size: 4rem;
+        margin: 0 0 1rem 0;
+        text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+        color: transparent;
+        background: linear-gradient(45deg, #ff006e, #8b00ff, #00ffff);
+        background-clip: text;
+        -webkit-background-clip: text;
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+      
+      .hero p {
+        font-size: 1.5rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+      
+      .cta-button {
+        display: inline-block;
+        background: linear-gradient(45deg, #ff006e, #8b00ff);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 5px 25px rgba(255, 0, 110, 0.4);
+      }
+      
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 40px rgba(255, 0, 110, 0.6);
+      }
+      
+      .features {
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        margin-top: 2rem;
+      }
+      
+      .features h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: white;
+        text-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+      }
+      
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+      
+      .feature-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 0, 255, 0.2);
+      }
+      
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(255, 0, 255, 0.3);
+      }
+      
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+      
+      .feature-card h3 {
+        color: white;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+      }
+      
+      .feature-card p {
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.6;
+      }
+      
+      .feature-card a {
+        display: inline-block;
+        margin-top: 1rem;
+        color: #ff006e;
+        text-decoration: none;
+        font-weight: 500;
+        text-shadow: 0 0 5px rgba(255, 0, 110, 0.8);
+      }
+      
+      .feature-card a:hover {
+        text-decoration: underline;
+      }
+      
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+        }
+        to {
+          text-shadow: 0 0 30px rgba(255, 0, 255, 1), 0 0 40px rgba(0, 255, 255, 0.8);
+        }
+      }
+      
+      #about, #services {
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 2rem auto;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 0, 255, 0.2);
+      }
+      
+      #about h2, #services h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: white;
+        text-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+      }
+      
+      #about p {
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.8;
+        font-size: 1.1rem;
+      }
+      
+      .service-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .service-item {
+        background: linear-gradient(135deg, rgba(255, 0, 110, 0.8) 0%, rgba(139, 0, 255, 0.8) 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.3s;
+        box-shadow: 0 5px 20px rgba(255, 0, 110, 0.3);
+      }
+      
+      .service-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 30px rgba(255, 0, 110, 0.5);
+      }
+    </style>
   </head>
   <body>
-    <h1>Nothing here</h1>
+    <div id="threejs-container"></div>
+    
+    <div class="content-overlay">
+      <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="go-here.html">Go here</a></li>
+        <li><a href="from-here.html">From here</a></li>
+        <li><a href="world-map.html">World Map</a></li>
+        <li><a href="duck-game.html">Duck Game</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="duck-ranks.html">Duck Ranks</a></li>
+        <li><a href="guestbook.html">Guestbook</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+      <div class="audio-controls">
+        <button class="audio-toggle" title="Play synthwave music">🔊</button>
+        <div class="volume-container">
+          <input type="range" class="volume-slider" min="0" max="100" value="30" title="Volume">
+          <span class="volume-percentage">30%</span>
+        </div>
+        <div class="audio-info">Synthwave Ambient</div>
+      </div>
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+    
+      <section class="hero" id="home">
+        <h1>Duck and Cover the Future!</h1>
+        <p>Get ready to have a quacking good time! Our site is absolutely ducky - no fowl play, just pure webbed-footed excellence!</p>
+        <a href="world-map.html" class="cta-button">Begin Your Journey</a>
+      </section>
+    
+    <section class="features">
+      <h2>What We're Quacking Up</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3>Duck-lightful Global Recipes</h3>
+          <p>Don't duck out on these egg-cellent recipes from around the world! We've got all your ducks in a row for a meal that's simply quack-tastic.</p>
+          <a href="world-map.html">Duck Into Map</a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">👨‍🍳</div>
+          <h3>Egg-spert Guidance</h3>
+          <p>Our recipes are no sitting duck - they're the duck's nuts! Follow our step-by-step guides and you'll be cooking like a pro in no time flat... or should we say, bill?</p>
+          <a href="contact.html">Get Cooking, Duck!</a>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <h3>Flock Together Community</h3>
+          <p>Join our pond of food enthusiasts! Don't be a dead duck - dive in and share your culinary adventures with fellow duck lovers. Water you waiting for?</p>
+          <a href="login.html">Join the Flock</a>
+        </div>
+      </div>
+    </section>
+    
+    <section id="about">
+      <h2>About Us Duck-Heads</h2>
+      <p>We're absolutely quackers about bringing the world's best recipes to your kitchen! Our platform connects food lovers who aren't chicken when it comes to trying new dishes. From the maple-glazed duck preparations that'll make you say "holy duck!" to the spice-infused creations that are totally quack-alicious, we celebrate culinary diversity like a true flock.</p>
+      <p>Whether you're a seasoned chef or just hatching as a beginner, our detailed recipes will help you spread your wings! Don't duck the challenge - dive into our world map and discover your next favorite dish that's sure to be all it's quacked up to be!</p>
+    </section>
+    
+    <section id="services">
+      <h2>Our Duck-tastic Services</h2>
+      <div class="service-list">
+        <div class="service-item">
+          <h3>Recipe Collection</h3>
+          <p>Curated recipes that are the duck's pajamas</p>
+        </div>
+        <div class="service-item">
+          <h3>Interactive Maps</h3>
+          <p>Click and explore - no wild goose chases here!</p>
+        </div>
+        <div class="service-item">
+          <h3>Cooking Guides</h3>
+          <p>Instructions so good, they're quack-proof</p>
+        </div>
+        <div class="service-item">
+          <h3>Community Forum</h3>
+          <p>Share tips - let's talk turkey... er, duck!</p>
+        </div>
+      </div>
+    </section>
+    <script>
+      function toggleMobileMenu() {
+        const menu = document.querySelector('nav ul');
+        menu.classList.toggle('show');
+      }
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('nav')) {
+          document.querySelector('nav ul').classList.remove('show');
+        }
+      });
+    </script>
+    
+    </div> <!-- Close content-overlay -->
+    
+    <script>
+      // Three.js Scene Setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x000000, 0);
+      document.getElementById('threejs-container').appendChild(renderer.domElement);
+      
+      // Create starfield
+      const starGeometry = new THREE.BufferGeometry();
+      const starCount = 2000;
+      const starPositions = new Float32Array(starCount * 3);
+      const starColors = new Float32Array(starCount * 3);
+      
+      for (let i = 0; i < starCount * 3; i += 3) {
+        starPositions[i] = (Math.random() - 0.5) * 2000;
+        starPositions[i + 1] = (Math.random() - 0.5) * 2000;
+        starPositions[i + 2] = (Math.random() - 0.5) * 2000;
+        
+        // Random colors between purple, pink, and cyan
+        const colorChoice = Math.random();
+        if (colorChoice < 0.33) {
+          starColors[i] = 1; starColors[i + 1] = 0; starColors[i + 2] = 1; // Magenta
+        } else if (colorChoice < 0.66) {
+          starColors[i] = 0.5; starColors[i + 1] = 0; starColors[i + 2] = 1; // Purple
+        } else {
+          starColors[i] = 0; starColors[i + 1] = 1; starColors[i + 2] = 1; // Cyan
+        }
+      }
+      
+      starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+      starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+      
+      const starMaterial = new THREE.PointsMaterial({
+        size: 3,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8
+      });
+      
+      const stars = new THREE.Points(starGeometry, starMaterial);
+      scene.add(stars);
+      
+      // Create 3D Text "UNCONFERENCE"
+      const textGroup = new THREE.Group();
+      
+      // Create letters as 3D text meshes
+      const fontLoader = new THREE.FontLoader();
+      
+      // Since we can't load external fonts easily, we'll create the text with basic geometry
+      const letters = ['U', 'N', 'C', 'O', 'N', 'F', 'E', 'R', 'E', 'N', 'C', 'E'];
+      const letterSpacing = 15;
+      
+      letters.forEach((letter, index) => {
+        // Create a plane for each letter
+        const letterGeometry = new THREE.PlaneGeometry(10, 15);
+        const letterMaterial = new THREE.MeshBasicMaterial({
+          color: new THREE.Color().setHSL(0.8 + index * 0.05, 1, 0.5),
+          transparent: true,
+          opacity: 0.9,
+          side: THREE.DoubleSide
+        });
+        
+        const letterMesh = new THREE.Mesh(letterGeometry, letterMaterial);
+        letterMesh.position.x = (index - letters.length / 2) * letterSpacing;
+        letterMesh.position.y = Math.sin(index * 0.5) * 5;
+        letterMesh.rotation.y = index * 0.1;
+        
+        textGroup.add(letterMesh);
+      });
+      
+      scene.add(textGroup);
+      
+      // Position camera
+      camera.position.z = 100;
+      camera.position.y = 10;
+      
+      // Animation variables
+      let time = 0;
+      
+      // Animate
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+        
+        // Rotate stars
+        stars.rotation.x += 0.001;
+        stars.rotation.y += 0.002;
+        
+        // Animate text
+        textGroup.rotation.x = Math.sin(time * 0.5) * 0.1;
+        textGroup.rotation.y = time * 0.3;
+        textGroup.position.y = Math.sin(time * 0.8) * 5;
+        
+        // Animate dog
+        animateDog();
+        
+        // Animate individual letters
+        textGroup.children.forEach((letter, index) => {
+          letter.position.y = Math.sin(time * 2 + index * 0.5) * 8;
+          letter.rotation.z = Math.sin(time * 1.5 + index * 0.3) * 0.2;
+          
+          // Color cycling
+          const hue = (time + index * 0.1) % 1;
+          letter.material.color.setHSL(hue, 1, 0.6);
+        });
+        
+        // Weird starry effects - make some stars pulse
+        const positions = stars.geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+          positions[i + 1] += Math.sin(time * 3 + i) * 0.1;
+        }
+        stars.geometry.attributes.position.needsUpdate = true;
+        
+        renderer.render(scene, camera);
+      }
+      
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+      
+      // Create walking dog animation
+      const dogGroup = new THREE.Group();
+      
+      // Dog body (simple geometric shapes)
+      const bodyGeometry = new THREE.BoxGeometry(3, 1.5, 1);
+      const bodyMaterial = new THREE.MeshBasicMaterial({ color: 0x8B4513 }); // Brown
+      const dogBody = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      dogGroup.add(dogBody);
+      
+      // Dog head
+      const headGeometry = new THREE.SphereGeometry(0.8, 8, 8);
+      const dogHead = new THREE.Mesh(headGeometry, bodyMaterial);
+      dogHead.position.set(2, 0.5, 0);
+      dogGroup.add(dogHead);
+      
+      // Dog tail
+      const tailGeometry = new THREE.CylinderGeometry(0.1, 0.2, 1.5);
+      const dogTail = new THREE.Mesh(tailGeometry, bodyMaterial);
+      dogTail.position.set(-1.8, 0.5, 0);
+      dogTail.rotation.z = 0.5;
+      dogGroup.add(dogTail);
+      
+      // Dog legs
+      const legGeometry = new THREE.CylinderGeometry(0.15, 0.15, 1);
+      for (let i = 0; i < 4; i++) {
+        const leg = new THREE.Mesh(legGeometry, bodyMaterial);
+        leg.position.set(
+          i < 2 ? 1 : -1,
+          -1.25,
+          i % 2 === 0 ? 0.4 : -0.4
+        );
+        dogGroup.add(leg);
+      }
+      
+      // Position dog visible on screen
+      dogGroup.position.set(-50, 30, 50);
+      dogGroup.scale.set(5, 5, 5);
+      scene.add(dogGroup);
+      
+      // Dog walking animation variables
+      let dogWalkTime = 0;
+      let dogDirection = 1;
+      
+      // Start animation
+      animate();
+      
+      // Dog animation function
+      function animateDog() {
+        dogWalkTime += 0.02;
+        
+        // Move dog across screen
+        dogGroup.position.x += dogDirection * 1;
+        
+        // Bounce tail
+        dogTail.rotation.z = 0.5 + Math.sin(dogWalkTime * 8) * 0.3;
+        
+        // Bob up and down slightly
+        dogGroup.position.y = 30 + Math.sin(dogWalkTime * 6) * 2;
+        
+        // Rotate legs for walking effect
+        dogGroup.children.forEach((child, index) => {
+          if (index > 2) { // legs
+            child.rotation.x = Math.sin(dogWalkTime * 8 + index) * 0.5;
+          }
+        });
+        
+        // Reset position when off-screen
+        if (dogGroup.position.x > 100) {
+          dogGroup.position.x = -100;
+        }
+      }
+    </script>
+    
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-top">
+          <div class="footer-section">
+            <h3>Unconference</h3>
+            <p>Experience amazing recipes, explore the world, and join our vibrant community of food and tech enthusiasts.</p>
+            <p>Built with cutting-edge web technologies and a passion for innovation.</p>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="world-map.html">World Recipe Map</a></li>
+              <li><a href="duck-game.html">Duck Pong Game</a></li>
+              <li><a href="gallery.html">Duck Gallery</a></li>
+              <li><a href="contact.html">Recipes</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <div class="crypto-ticker" id="crypto-tickers">
+              <!-- Crypto tickers will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2024 Unconference. Built with Three.js, Synthwave CSS, and Binance API.</p>
+          <p>Prices provided by Binance. Updates every 5 minutes.</p>
+        </div>
+      </div>
+    </footer>
+    
+    <script src="footer.js"></script>
+    <script src="auth.js"></script>
+    <script src="audio-controls.js"></script>
+    <script>
+      // Show user greeting if logged in
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof authManager !== 'undefined' && authManager.isLoggedIn()) {
+          showUserGreeting();
+        }
+      });
+
+      // Simple floating duck effect for home page only
+      function createFloatingDuck() {
+        const duck = document.createElement('div');
+        duck.innerHTML = '🦆';
+        duck.style.cssText = `
+          position: fixed;
+          font-size: ${Math.random() * 20 + 20}px;
+          left: ${Math.random() * window.innerWidth}px;
+          top: ${window.innerHeight + 50}px;
+          pointer-events: none;
+          z-index: 5;
+          transition: all 6s linear;
+          opacity: 0.7;
+        `;
+        document.body.appendChild(duck);
+        
+        setTimeout(() => {
+          duck.style.top = '-100px';
+          duck.style.opacity = '0';
+        }, 100);
+        
+        setTimeout(() => duck.remove(), 6000);
+      }
+
+      // Create floating ducks occasionally
+      setInterval(() => {
+        if (Math.random() < 0.3) {
+          createFloatingDuck();
+        }
+      }, 4000);
+    </script>
   </body>
 </html>
